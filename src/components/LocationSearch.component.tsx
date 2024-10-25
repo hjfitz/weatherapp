@@ -6,6 +6,26 @@ type LocationSearchProps = {
   setLocation: Dispatch<SetStateAction<UserLocation | undefined>>;
 };
 
+function getPosition(timeout = 400, retries = 3): Promise<UserLocation> {
+  return new Promise((res) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        res({
+          lat: position.coords.latitude.toString(),
+          lng: position.coords.longitude.toString(),
+        });
+      },
+      (error) => {
+        console.error(error);
+        if (retries > 0) {
+          return getPosition(timeout * 2, retries - 1);
+        }
+      },
+      { timeout },
+    );
+  });
+}
+
 export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
   const searchQuery = useRef<HTMLInputElement>(null);
 
@@ -22,18 +42,12 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
     }
   };
 
-  const getUserLocation: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const getUserLocation: MouseEventHandler<HTMLButtonElement> = async (
+    event,
+  ) => {
     event.preventDefault();
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocation({
-          lat: position.coords.latitude.toString(),
-          lng: position.coords.longitude.toString(),
-        });
-      },
-      console.error,
-      { timeout: 5e3 },
-    );
+    const location = await getPosition();
+    setLocation(location);
   };
 
   return (
@@ -52,7 +66,7 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
           Search
         </button>
       </form>
-	  <p className="text-center text-lg my-2">- OR -</p>
+      <p className="text-center text-lg my-2">- OR -</p>
       <button
         onClick={getUserLocation}
         className="w-full p-3 bg-teal-500 text-white rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
