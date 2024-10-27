@@ -1,4 +1,5 @@
-import { GeocodingResponseDTO, UserLocation } from "@/types/geocoding.types";
+import { UserLocation } from "@/types/geocoding.types";
+import { GeocodingResponseDTO } from "@/types/open-meteo.types";
 import { sleep } from "@/util";
 import axios, { AxiosInstance } from "axios";
 

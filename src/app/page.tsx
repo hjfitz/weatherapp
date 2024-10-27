@@ -21,7 +21,7 @@ import { ErrorNotification } from "@/components/ErrorNotification.component";
  * [DONE] 1. Move button to own component
  * [DONE] 1. Consider handline errors in some capacity?
  * [DONE] 1. We could add a loading icon?
- * 1. Switch out the placholder icon!
+ * [DONE] 1. Switch out the placholder icon!
  * 1. Create a README that actually works and strip out remainder of CNA stuff
  * 1. Consider adding a toggle for Celsius and Farenheit?
  */
@@ -34,7 +34,7 @@ const App = () => {
   return (
     <main className="p-5">
       <header className="py-6 [ flex flex-col items-center ]">
-        <h1 className="text-4xl font-bold">Weather App</h1>
+        <h1 className="text-5xl font-bold mb-6">Weather App</h1>
         <h2 className="text-3xl font-bold mb-4">Find Your Location</h2>
         <div className="w-full max-w-md">
           <LocationSearch />
@@ -51,6 +51,7 @@ const App = () => {
             key={weather.date}
             date={weather.date}
             description={weather.description}
+			descriptiveIcon={weather.descriptiveIcon}
             temp={weather.temp}
             windSpeed={weather.windSpeed}
           />
