@@ -15,7 +15,6 @@ export class WeatherService {
     });
   }
 
-  // todo: transform and return
   public async getWeather({ lat, lng }: UserLocation): Promise<Weather[]> {
     console.log(lat, lng);
     const { data } = await this.apiBase.get<WeatherResponseDTO>("/", {
@@ -34,10 +33,8 @@ export class WeatherService {
   public transformResponse(weatherResponseDTO: WeatherResponseDTO): Weather[] {
     const normalisedWeather: Weather[] = [];
 
-    // api constract states 7 days. We only want 5
-    // optimisation: check the shortedst length
+    // optimisation: check the shortest length
     for (let i = 0; i < 5; i++) {
-      // todo: parse these
       const date = format(weatherResponseDTO.daily.time[i], "EEE, do LLL");
 
       const description = this.deriveWeatherDescriptionFromWMOCode(
@@ -46,13 +43,14 @@ export class WeatherService {
 
       const maxTemp = weatherResponseDTO.daily.temperature_2m_max[i];
       const minTemp = weatherResponseDTO.daily.temperature_2m_min[i];
+      const avgTmp = (maxTemp + minTemp) / 2;
 
       const windSpeed = weatherResponseDTO.daily.wind_speed_10m_max[i];
 
       normalisedWeather.push({
         date,
         description,
-        temp: maxTemp.toString(),
+        temp: avgTmp.toString(),
         windSpeed: windSpeed.toString(),
       });
     }

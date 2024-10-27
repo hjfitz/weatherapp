@@ -3,7 +3,14 @@ import { useEffect } from "react";
 import { WeatherCard } from "@/components/WeatherCard.component";
 import { LocationSearch } from "@/components/LocationSearch.component";
 import { weatherService } from "@/services";
-import { useForecast, useLocation } from "@/hooks/context.hooks";
+import {
+  useErrors,
+  useForecast,
+  useLoading,
+  useLocation,
+} from "@/hooks/context.hooks";
+import { Spinner } from "@/components/Spinner.component";
+import { ErrorNotification } from "@/components/ErrorNotification.component";
 
 /**
  * App todo:
@@ -16,22 +23,35 @@ import { useForecast, useLocation } from "@/hooks/context.hooks";
  * [DONE] 1. Rename use of WeatherCardProps
  * [DONE] 1. Switch states to context for a little cleanup
  * [DONE] 1. update updateLocation stuff
- * 1. Handle errors and loading
+ * [DONE] 1. Handle errors and loading
  * 1. Move getWeather hook functionality to provider
  * 1. Move button to own component
- * 1. Consider handline errors in some capacity?
- * 1. We could add a loading icon?
+ * [DONE] 1. Consider handline errors in some capacity?
+ * [DONE] 1. We could add a loading icon?
  */
 
 const App = () => {
   const { location } = useLocation();
   const { forecast, setForecast } = useForecast();
+  const { loading, setLoading } = useLoading();
+  const { errors, setErrors } = useErrors();
 
   // todo: makes sense to decouple this from the view layer and shove in provider
   useEffect(() => {
     if (!location) return;
-    weatherService.getWeather(location).then(setForecast);
+    setLoading(true);
+    weatherService.getWeather(location).then((forecastResponse) => {
+      setLoading(false);
+      setForecast(forecastResponse);
+    });
   }, [location]);
+
+  useEffect(() => {
+    if (!errors) return;
+    setTimeout(() => {
+      setErrors(null);
+    }, 5e3);
+  }, [errors]);
 
   return (
     <main className="p-5">
@@ -41,6 +61,10 @@ const App = () => {
           <LocationSearch />
         </div>
       </section>
+
+      {loading && <Spinner />}
+
+      {errors && <ErrorNotification message={errors} />}
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-5">
         {forecast.map((weather) => (

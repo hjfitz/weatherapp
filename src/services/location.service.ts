@@ -37,19 +37,22 @@ export class LocationService {
     backoffMs = 200,
     retries = 3,
   ): Promise<UserLocation> {
-    return new Promise((res) => {
+    return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          res({
+          resolve({
             lat: position.coords.latitude.toString(),
             lng: position.coords.longitude.toString(),
           });
         },
         async (error) => {
-          console.error(error);
           if (retries > 0) {
             await sleep(backoffMs);
-            return this.getPosition(timeoutMs * 2, backoffMs * 2, retries - 1);
+            resolve(
+              this.getPosition(timeoutMs * 2, backoffMs * 2, retries - 1),
+            );
+          } else {
+            reject(error);
           }
         },
         { timeout: timeoutMs },

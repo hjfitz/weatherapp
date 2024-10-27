@@ -1,21 +1,32 @@
-import { useLocation } from "@/hooks/context.hooks";
+import { useErrors, useLoading, useLocation } from "@/hooks/context.hooks";
 import { locationService } from "@/services";
 import { MouseEventHandler, useRef } from "react";
 
 export const LocationSearch = () => {
   const { setLocation } = useLocation();
+  const { setLoading } = useLoading();
+  const { setErrors } = useErrors();
   const searchQuery = useRef<HTMLInputElement>(null);
 
-  const queryLocation: MouseEventHandler<HTMLButtonElement> = async (
-    event,
-  ) => {
+  const queryLocation: MouseEventHandler<HTMLButtonElement> = async (event) => {
     event.preventDefault();
     const query = searchQuery.current?.value;
     if (!query) return;
 
-    const userLocation = await locationService.searchLocation(query);
-    if (userLocation) {
-      setLocation(userLocation);
+    try {
+      setLoading(true);
+      const userLocation = await locationService.searchLocation(query);
+      if (userLocation) {
+        setLocation(userLocation);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setErrors(`There was an issue fetching your location: ${err.message}`);
+      } else {
+        setErrors("There was an unknown issue fetching your location");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -23,8 +34,19 @@ export const LocationSearch = () => {
     event,
   ) => {
     event.preventDefault();
-    const location = await locationService.getPosition();
-    setLocation(location);
+    setLoading(true);
+    try {
+      const location = await locationService.getPosition();
+      setLocation(location);
+    } catch (err) {
+      if (err instanceof Error) {
+        setErrors(`There was an issue fetching your location: ${err.message}`);
+      } else {
+        setErrors("There was an unknown issue fetching your location");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
