@@ -17,10 +17,12 @@ import { ErrorNotification } from "@/components/ErrorNotification.component";
  * [DONE] 1. Switch states to context for a little cleanup
  * [DONE] 1. update updateLocation stuff
  * [DONE] 1. Handle errors and loading
- * 1. Move getWeather hook functionality to provider
- * 1. Move button to own component
+ * [DONE] 1. Move getWeather hook functionality to provider
+ * [DONE] 1. Move button to own component
  * [DONE] 1. Consider handline errors in some capacity?
  * [DONE] 1. We could add a loading icon?
+ * 1. Switch out the placholder icon!
+ * 1. Consider adding a toggle for Celsius and Farenheit?
  */
 
 const App = () => {
@@ -30,12 +32,12 @@ const App = () => {
 
   return (
     <main className="p-5">
-      <section className="py-6 ">
+      <header className="py-6 ">
         <h2 className="text-3xl font-bold mb-4">Find Your Location</h2>
         <div className="w-full max-w-md">
           <LocationSearch />
         </div>
-      </section>
+      </header>
 
       {loading && <Spinner />}
 

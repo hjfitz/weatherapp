@@ -1,6 +1,7 @@
 import { useErrors, useLoading, useLocation } from "@/hooks/context.hooks";
 import { locationService } from "@/services";
 import { MouseEventHandler, useRef } from "react";
+import { Button } from "./Button.component";
 
 export const LocationSearch = () => {
   const { setLocation } = useLocation();
@@ -58,20 +59,19 @@ export const LocationSearch = () => {
           className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 col-span-9"
           placeholder="Enter a location..."
         />
-        <button
+        <Button
           onClick={queryLocation}
-          className="w-full p-3 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition col-span-3"
         >
           Search
-        </button>
+        </Button>
       </form>
       <p className="text-center text-lg my-2">- OR -</p>
-      <button
+      <Button
         onClick={getUserLocation}
-        className="w-full p-3 bg-teal-500 text-white rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        additionalClassNames="bg-teal-500 hover:bg-teal-600"
       >
         Use My Current Location
-      </button>
+      </Button>
     </div>
   );
 };
