@@ -1,33 +1,10 @@
+import { useLocation } from "@/hooks/context.hooks";
 import { locationService } from "@/services";
-import { UserLocation } from "@/types/geocoding.types";
-import { Dispatch, MouseEventHandler, SetStateAction, useRef } from "react";
+import { MouseEventHandler, useRef } from "react";
 
-type LocationSearchProps = {
-  setLocation: Dispatch<SetStateAction<UserLocation | undefined>>;
-};
-
-function getPosition(timeout = 400, retries = 3): Promise<UserLocation> {
-  return new Promise((res) => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        res({
-          lat: position.coords.latitude.toString(),
-          lng: position.coords.longitude.toString(),
-        });
-      },
-      (error) => {
-        console.error(error);
-        if (retries > 0) {
-          return getPosition(timeout * 2, retries - 1);
-        }
-      },
-      { timeout },
-    );
-  });
-}
-
-export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
+export const LocationSearch = () => {
   const searchQuery = useRef<HTMLInputElement>(null);
+  const { setLocation } = useLocation();
 
   const updateLocation: MouseEventHandler<HTMLButtonElement> = async (
     event,
@@ -46,7 +23,7 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
     event,
   ) => {
     event.preventDefault();
-    const location = await getPosition();
+    const location = await locationService.getPosition();
     setLocation(location);
   };
 

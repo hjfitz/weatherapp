@@ -1,4 +1,5 @@
 import { GeocodingResponseDTO, UserLocation } from "@/types/geocoding.types";
+import { sleep } from "@/util";
 import axios, { AxiosInstance } from "axios";
 
 export class LocationService {
@@ -29,5 +30,30 @@ export class LocationService {
       };
     }
     return null;
+  }
+
+  public getPosition(
+    timeoutMs = 100,
+    backoffMs = 200,
+    retries = 3,
+  ): Promise<UserLocation> {
+    return new Promise((res) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          res({
+            lat: position.coords.latitude.toString(),
+            lng: position.coords.longitude.toString(),
+          });
+        },
+        async (error) => {
+          console.error(error);
+          if (retries > 0) {
+            await sleep(backoffMs);
+            return this.getPosition(timeoutMs * 2, backoffMs * 2, retries - 1);
+          }
+        },
+        { timeout: timeoutMs },
+      );
+    });
   }
 }

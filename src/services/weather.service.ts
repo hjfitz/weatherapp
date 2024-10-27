@@ -16,10 +16,7 @@ export class WeatherService {
   }
 
   // todo: transform and return
-  public async getWeather({
-    lat,
-    lng,
-  }: UserLocation): Promise<Weather[]> {
+  public async getWeather({ lat, lng }: UserLocation): Promise<Weather[]> {
     console.log(lat, lng);
     const { data } = await this.apiBase.get<WeatherResponseDTO>("/", {
       params: {
@@ -34,9 +31,7 @@ export class WeatherService {
     return this.transformResponse(data);
   }
 
-  public transformResponse(
-    weatherResponseDTO: WeatherResponseDTO,
-  ): Weather[] {
+  public transformResponse(weatherResponseDTO: WeatherResponseDTO): Weather[] {
     const normalisedWeather: Weather[] = [];
 
     // api constract states 7 days. We only want 5
