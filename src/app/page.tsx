@@ -15,7 +15,8 @@ import { useForecast, useLocation } from "@/hooks/context.hooks";
  * [DONE] 1. Add retries to flaky browser api
  * [DONE] 1. Rename use of WeatherCardProps
  * [DONE] 1. Switch states to context for a little cleanup
- * 1. update updateLocation stuff
+ * [DONE] 1. update updateLocation stuff
+ * 1. Handle errors and loading
  * 1. Move getWeather hook functionality to provider
  * 1. Move button to own component
  * 1. Consider handline errors in some capacity?

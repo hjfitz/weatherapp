@@ -3,10 +3,10 @@ import { locationService } from "@/services";
 import { MouseEventHandler, useRef } from "react";
 
 export const LocationSearch = () => {
-  const searchQuery = useRef<HTMLInputElement>(null);
   const { setLocation } = useLocation();
+  const searchQuery = useRef<HTMLInputElement>(null);
 
-  const updateLocation: MouseEventHandler<HTMLButtonElement> = async (
+  const queryLocation: MouseEventHandler<HTMLButtonElement> = async (
     event,
   ) => {
     event.preventDefault();
@@ -37,7 +37,7 @@ export const LocationSearch = () => {
           placeholder="Enter a location..."
         />
         <button
-          onClick={updateLocation}
+          onClick={queryLocation}
           className="w-full p-3 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition col-span-3"
         >
           Search
