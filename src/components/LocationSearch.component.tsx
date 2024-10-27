@@ -56,12 +56,10 @@ export const LocationSearch = () => {
         <input
           type="text"
           ref={searchQuery}
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 col-span-9"
+          className="p-3 col-span-9 [ border border-gray-300 rounded ] [ focus:outline-none focus:ring-2 focus:ring-blue-500 ]"
           placeholder="Enter a location..."
         />
-        <Button
-          onClick={queryLocation}
-        >
+        <Button onClick={queryLocation} additionalClassNames="col-span-3">
           Search
         </Button>
       </form>
