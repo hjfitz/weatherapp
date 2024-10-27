@@ -22,7 +22,7 @@ import { ErrorNotification } from "@/components/ErrorNotification.component";
  * [DONE] 1. Consider handline errors in some capacity?
  * [DONE] 1. We could add a loading icon?
  * [DONE] 1. Switch out the placholder icon!
- * 1. Create a README that actually works and strip out remainder of CNA stuff
+ * [DONE] 1. Create a README that actually works and strip out remainder of CNA stuff
  * 1. Consider adding a toggle for Celsius and Farenheit?
  */
 

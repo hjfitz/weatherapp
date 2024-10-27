@@ -23,7 +23,7 @@ export class LocationService {
     });
 
     // return the most relevant result
-    if (data.results[0]) {
+    if (data.results?.[0]) {
       const { latitude, longitude } = data.results[0];
       return {
         lat: latitude.toString(),
