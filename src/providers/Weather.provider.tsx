@@ -1,4 +1,5 @@
 "use client";
+import { weatherService } from "@/services";
 import { UserLocation } from "@/types/geocoding.types";
 import { Weather } from "@/types/weather.type";
 import React, {
@@ -6,6 +7,7 @@ import React, {
   useState,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from "react";
 
 export type WeatherProviderProps = {
@@ -32,6 +34,22 @@ export const WeatherProvider = ({ children }: WeatherProviderProps) => {
   const [forecast, setForecast] = useState<Weather[]>([]);
   const [errors, setErrors] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!location) return;
+    setLoading(true);
+    weatherService.getWeather(location).then((forecastResponse) => {
+      setLoading(false);
+      setForecast(forecastResponse);
+    });
+  }, [location]);
+
+  useEffect(() => {
+    if (!errors) return;
+    setTimeout(() => {
+      setErrors(null);
+    }, 5e3);
+  }, [errors]);
 
   return (
     <WeatherContext.Provider

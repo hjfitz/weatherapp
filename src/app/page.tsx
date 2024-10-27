@@ -1,14 +1,7 @@
 "use client";
-import { useEffect } from "react";
 import { WeatherCard } from "@/components/WeatherCard.component";
 import { LocationSearch } from "@/components/LocationSearch.component";
-import { weatherService } from "@/services";
-import {
-  useErrors,
-  useForecast,
-  useLoading,
-  useLocation,
-} from "@/hooks/context.hooks";
+import { useErrors, useForecast, useLoading } from "@/hooks/context.hooks";
 import { Spinner } from "@/components/Spinner.component";
 import { ErrorNotification } from "@/components/ErrorNotification.component";
 
@@ -31,27 +24,9 @@ import { ErrorNotification } from "@/components/ErrorNotification.component";
  */
 
 const App = () => {
-  const { location } = useLocation();
-  const { forecast, setForecast } = useForecast();
-  const { loading, setLoading } = useLoading();
-  const { errors, setErrors } = useErrors();
-
-  // todo: makes sense to decouple this from the view layer and shove in provider
-  useEffect(() => {
-    if (!location) return;
-    setLoading(true);
-    weatherService.getWeather(location).then((forecastResponse) => {
-      setLoading(false);
-      setForecast(forecastResponse);
-    });
-  }, [location]);
-
-  useEffect(() => {
-    if (!errors) return;
-    setTimeout(() => {
-      setErrors(null);
-    }, 5e3);
-  }, [errors]);
+  const { forecast } = useForecast();
+  const { loading } = useLoading();
+  const { errors } = useErrors();
 
   return (
     <main className="p-5">
