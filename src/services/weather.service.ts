@@ -1,6 +1,5 @@
-import { WeatherCardProps } from "@/components/WeatherCard.component";
 import { UserLocation } from "@/types/geocoding.types";
-import { WeatherResponseDTO } from "@/types/weather.type";
+import { Weather, WeatherResponseDTO } from "@/types/weather.type";
 import axios, { AxiosInstance } from "axios";
 import { format } from "date-fns/format";
 
@@ -20,7 +19,7 @@ export class WeatherService {
   public async getWeather({
     lat,
     lng,
-  }: UserLocation): Promise<WeatherCardProps[]> {
+  }: UserLocation): Promise<Weather[]> {
     console.log(lat, lng);
     const { data } = await this.apiBase.get<WeatherResponseDTO>("/", {
       params: {
@@ -37,8 +36,8 @@ export class WeatherService {
 
   public transformResponse(
     weatherResponseDTO: WeatherResponseDTO,
-  ): WeatherCardProps[] {
-    const normalisedWeather: WeatherCardProps[] = [];
+  ): Weather[] {
+    const normalisedWeather: Weather[] = [];
 
     // api constract states 7 days. We only want 5
     // optimisation: check the shortedst length

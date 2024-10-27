@@ -10,7 +10,7 @@ export type WeatherResponseDTO = {
   daily: Daily;
 };
 
-export type DailyUnits = {
+type DailyUnits = {
   time: string;
   weather_code: string;
   temperature_2m_max: string;
@@ -18,10 +18,17 @@ export type DailyUnits = {
   wind_speed_10m_max: string;
 };
 
-export type Daily = {
+type Daily = {
   time: string[];
   weather_code: number[];
   temperature_2m_max: number[];
   temperature_2m_min: number[];
   wind_speed_10m_max: number[];
+};
+
+export type Weather = {
+  date: string;
+  description: string;
+  temp: string;
+  windSpeed: string;
 };

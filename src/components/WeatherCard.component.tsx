@@ -1,9 +1,6 @@
-export type WeatherCardProps = {
-  date: string;
-  description: string;
-  temp: string;
-  windSpeed: string;
-};
+import { Weather } from "@/types/weather.type";
+
+export type WeatherCardProps = Weather;
 
 export const WeatherCard = ({
   date,
