@@ -2,6 +2,8 @@
 
 Next.js application which displays a 5-day forecast for any given location via either a set location, or the geolocation api.
 
+A live preview of this project is available at [weather.hjf.io](https://weather.hjf.io).
+
 ## Prerequisites
 
 - Node.js (>= 18.18)
@@ -23,6 +25,7 @@ yarn
 ```
 
 3. **Development**
+
 To start the development server, run:
 
 ```bash
@@ -32,6 +35,7 @@ yarn dev
 This will start the app at http://localhost:3000.
 
 4. **Build for Production**
+
 Create an optimized production build and start the server:
 
 ```bash
