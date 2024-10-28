@@ -51,7 +51,7 @@ const App = () => {
             key={weather.date}
             date={weather.date}
             description={weather.description}
-			descriptiveIcon={weather.descriptiveIcon}
+            descriptiveIcon={weather.descriptiveIcon}
             temp={weather.temp}
             windSpeed={weather.windSpeed}
           />

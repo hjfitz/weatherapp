@@ -5,4 +5,3 @@ export type Weather = {
   temp: string;
   windSpeed: string;
 };
-
