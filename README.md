@@ -4,7 +4,7 @@ Next.js application which displays a 5-day forecast for any given location via e
 
 ## Prerequisites
 
-- Node.js (>= 20.11)
+- Node.js (>= 18.18)
 - Yarn (>= 1.x)
 
 ## Getting Started
